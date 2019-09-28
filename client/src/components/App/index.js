@@ -1,6 +1,6 @@
 import React from 'react'
 import Spinner from '../Spinner'
-import Images from '../ImageUpload'
+import ImageUpload from '../ImageUpload'
 import Buttons from '../Buttons'
 // import { API_URL } from './config'
 import './index.css'
@@ -12,6 +12,7 @@ class App extends React.Component {
   }
 
   onChange = e => {
+    console.log(e.target.files)
     const files = Array.from(e.target.files)
     this.setState({ uploading: true })
 
@@ -20,6 +21,7 @@ class App extends React.Component {
     files.forEach((file, i) => {
       formData.append(i, file)
     })
+    console.log(files)
 
     // fetch(`${API_URL}/image-upload`, {
     //   method: 'POST',
@@ -48,7 +50,7 @@ class App extends React.Component {
         case uploading:
           return <Spinner />
         case images.length > 0:
-          return <Images images={images} removeImage={this.removeImage} />
+          return <ImageUpload images={images} removeImage={this.removeImage} />
         default:
           return <Buttons onChange={this.onChange} />
       }
