@@ -21,6 +21,10 @@ class App extends React.Component {
     files.forEach((file, i) => {
       formData.append(i, file)
     })
+
+    const baseUrl = 'http://localhost:3001'
+
+    fetch(baseUrl).then(res => console.log(res))
     console.log(files)
 
     // fetch(`${API_URL}/image-upload`, {
