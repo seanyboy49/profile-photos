@@ -9,7 +9,7 @@ const Preview = ({ images, removeImage }) => {
     <div key={i} className="fadein">
       <div onClick={() => removeImage(image.id)} className="delete">
         <FontAwesomeIcon icon={faTimesCircle} size="2x" />
-        <img src={image.url} />
+        <img src={image.url} alt="" />
       </div>
     </div>
   ))
