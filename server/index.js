@@ -12,7 +12,7 @@ async function initServer() {
     method: "GET",
     path: "/",
     handler: (request, h) => {
-      return "Hello Wold!"
+      return "Hello World!"
     }
   })
 
