@@ -1,22 +1,22 @@
-import _ from "lodash"
+import _ from "lodash";
 
 const request = {
   get: function(url) {
-    return makeRequest(url, "GET")
+    return makeRequest(url, "GET");
   },
 
   post: function(url, data) {
     return makeRequest(url, {
       method: "POST",
       body: JSON.stringify(data)
-    })
+    });
   },
 
   put: function(url, data) {
     return makeRequest(url, {
       method: "PUT",
       body: JSON.stringify(data)
-    })
+    });
   },
 
   patch: function(url, data, headers) {
@@ -24,11 +24,11 @@ const request = {
       method: "PATCH",
       body: JSON.stringify(data),
       headers
-    })
+    });
   }
-}
+};
 function makeRequest(url, options) {
-  const spreadableOptions = _.omit(options, "headers")
+  const spreadableOptions = _.omit(options, "headers");
 
   return fetch(url, {
     ...spreadableOptions,
@@ -40,12 +40,12 @@ function makeRequest(url, options) {
   }).then(function(response) {
     if (!response.ok) {
       return response.json().then(function(error) {
-        throw new Error(error.message)
-      })
+        throw new Error(error.message);
+      });
     }
-    const res = response.json()
-    return res
-  })
+    const res = response.json();
+    return res;
+  });
 }
 
-export default request
+export default request;

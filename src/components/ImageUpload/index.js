@@ -1,6 +1,6 @@
-import React from "react"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faImages, faImage } from "@fortawesome/free-solid-svg-icons"
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faImages } from "@fortawesome/free-solid-svg-icons";
 
 const ImageUpload = props => (
   <div className="buttons fadein">
@@ -11,6 +11,6 @@ const ImageUpload = props => (
       <input type="file" id="multi" onChange={props.onChange} multiple />
     </div>
   </div>
-)
+);
 
-export default ImageUpload
+export default ImageUpload;

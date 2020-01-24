@@ -4,13 +4,13 @@ import ImageUpload from "../ImageUpload";
 // import { API_URL } from './config'
 import request from "../../utils/request";
 import "./index.css";
-
-const baseUrl = "http://localhost:3001";
+import useQuery from "../../hooks/useQuery";
 
 const App = () => {
   const [images, setImages] = useState([]);
-
-  console.log("images", images);
+  const baseUrl = "http://localhost:3001";
+  const { isFetching, error, parsedResponse } = useQuery({ url: baseUrl });
+  console.log("parsedResponse", parsedResponse);
 
   function onChange(e) {
     const files = Array.from(e.target.files);
@@ -55,21 +55,20 @@ const App = () => {
     //   })
   }
 
-  const content = () => {
-    switch (true) {
-      case images.length > 0:
-        return <Preview images={images} removeImage={removeImage} />;
-      default:
-        return <ImageUpload onChange={onChange} />;
-    }
-  };
+  const isPreview = images.length > 0;
 
   return (
     <div>
+      <div className="buttons">
+        {isPreview ? (
+          <Preview images={images} removeImage={removeImage} />
+        ) : (
+          <ImageUpload onChange={onChange} />
+        )}
+      </div>
       <button type="button" onClick={submit}>
-        Submit
+        Submit Photos
       </button>
-      <div className="buttons">{content()}</div>
     </div>
   );
 };
