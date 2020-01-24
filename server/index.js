@@ -19,6 +19,15 @@ async function initServer() {
     }
   })
 
+  server.route({
+    method: "POST",
+    path: "/upload-photos",
+    handler: (request, h) => {
+      console.log(request.payload)
+      return { message: "photo received" }
+    }
+  })
+
   await server.start()
   console.log("Server running on %s", server.info.uri)
 

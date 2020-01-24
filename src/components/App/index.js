@@ -6,6 +6,8 @@ import ImageUpload from "../ImageUpload"
 import request from "../../utils/request"
 import "./index.css"
 
+const baseUrl = "http://localhost:3001"
+
 class App extends React.Component {
   state = {
     uploading: false,
@@ -31,14 +33,18 @@ class App extends React.Component {
   }
 
   submit = async () => {
-    console.log("hello")
-    // const formData = new FormData()
-    // files.forEach((file, i) => {
-    //   formData.append(i, file)
-    // })
-    const baseUrl = "http://localhost:3001"
-    const response = await request.get(baseUrl)
-    console.log(response)
+    const { images } = this.state
+
+    const formData = new FormData()
+
+    images.forEach((file, i) => {
+      formData.append(i, file)
+    })
+
+    console.log(...formData)
+
+    const response = await request.post(`${baseUrl}/upload-photos`, formData)
+    // console.log(response)
     // fetch(`${API_URL}/image-upload`, {
     //   method: 'POST',
     //   body: formData,

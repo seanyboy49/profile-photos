@@ -44,7 +44,6 @@ function makeRequest(url, options) {
       })
     }
     const res = response.json()
-    console.log(res)
     return res
   })
 }
