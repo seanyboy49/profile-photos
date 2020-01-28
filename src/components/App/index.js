@@ -11,6 +11,12 @@ const App = () => {
   const baseUrl = "http://localhost:3001"
   console.log("app mounts")
 
+  const { postData, isFetching, error, parsedResponse } = usePost({})
+  console.log("isFetching", isFetching)
+  console.log("error", error)
+  console.log("parsedResponse", parsedResponse)
+  console.log("postData", postData)
+
   function onChange(e) {
     const files = Array.from(e.target.files)
 
@@ -29,18 +35,13 @@ const App = () => {
   }
 
   function submit() {
-    const { images } = this.state
-
     const formData = new FormData()
 
     images.forEach((file, i) => {
       formData.append(i, file)
     })
 
-    const { isFetching, error, parsedResponse } = usePost({
-      url: `${baseUrl}/upload-photos`,
-      data: formData
-    })
+    postData({ url: `${baseUrl}/upload-photos`, body: formData })
     // console.log(response)
     // fetch(`${API_URL}/image-upload`, {
     //   method: 'POST',
@@ -66,7 +67,7 @@ const App = () => {
           <ImageUpload onChange={onChange} />
         )}
       </div>
-      <button type="button" onClick={submit}>
+      <button type="button" onClick={submit} disabled={!images}>
         Submit Photos
       </button>
     </div>
