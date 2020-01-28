@@ -1,46 +1,46 @@
-import React, { useState } from "react";
-import Preview from "../Preview";
-import ImageUpload from "../ImageUpload";
+import React, { useState } from "react"
+import Preview from "../Preview"
+import ImageUpload from "../ImageUpload"
 // import { API_URL } from './config'
-import request from "../../utils/request";
-import "./index.css";
-import useQuery from "../../hooks/useQuery";
+import request from "../../utils/request"
+import "./index.css"
+import useQuery from "../../hooks/useQuery"
 
 const App = () => {
-  const [images, setImages] = useState([]);
-  const baseUrl = "http://localhost:3001";
-  const { isFetching, error, parsedResponse } = useQuery({ url: baseUrl });
-  console.log("parsedResponse", parsedResponse);
+  const [images, setImages] = useState([])
+  const baseUrl = "http://localhost:3001"
+  // const { isFetching, error, parsedResponse } = useQuery({ url: baseUrl });
+  const { parsedResponse, isFetching, error } = useQuery({ url: baseUrl })
 
   function onChange(e) {
-    const files = Array.from(e.target.files);
+    const files = Array.from(e.target.files)
 
     const formattedFiles = files.map((f, i) => {
-      const url = URL.createObjectURL(f);
+      const url = URL.createObjectURL(f)
 
-      return Object.assign(f, { id: i, url });
-    });
+      return Object.assign(f, { id: i, url })
+    })
 
-    setImages(formattedFiles);
+    setImages(formattedFiles)
   }
 
   function removeImage(id) {
-    const filteredImages = images.filter(image => image.id !== id);
-    setImages(filteredImages);
+    const filteredImages = images.filter(image => image.id !== id)
+    setImages(filteredImages)
   }
 
   async function submit() {
-    const { images } = this.state;
+    const { images } = this.state
 
-    const formData = new FormData();
+    const formData = new FormData()
 
     images.forEach((file, i) => {
-      formData.append(i, file);
-    });
+      formData.append(i, file)
+    })
 
-    console.log(...formData);
+    console.log(...formData)
 
-    const response = await request.post(`${baseUrl}/upload-photos`, formData);
+    // const response = await request.post(`${baseUrl}/upload-photos`, formData)
     // console.log(response)
     // fetch(`${API_URL}/image-upload`, {
     //   method: 'POST',
@@ -55,7 +55,7 @@ const App = () => {
     //   })
   }
 
-  const isPreview = images.length > 0;
+  const isPreview = images.length > 0
 
   return (
     <div>
@@ -70,7 +70,7 @@ const App = () => {
         Submit Photos
       </button>
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App
