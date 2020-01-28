@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 
-function useQuery({ url, options = {} }) {
+function usePost({ url, data, redirect = false, refetch = "", options = {} }) {
   const [parsedResponse, setParsedResponse] = useState(null)
   const [error, setError] = useState(null)
   const [isFetching, setIsFetching] = useState(null)
@@ -10,7 +10,10 @@ function useQuery({ url, options = {} }) {
       setIsFetching(true)
 
       try {
-        const response = await fetch(url, { method: "GET" })
+        const response = await fetch(url, {
+          method: "POST",
+          body: JSON.stringify(data)
+        })
         const success = await response.json()
         setIsFetching(false)
         setParsedResponse(success)
@@ -20,7 +23,7 @@ function useQuery({ url, options = {} }) {
     }
 
     fetchData()
-  }, [url])
+  }, [url, data])
 
   return {
     isFetching,
@@ -29,4 +32,4 @@ function useQuery({ url, options = {} }) {
   }
 }
 
-export default useQuery
+export default usePost

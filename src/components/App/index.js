@@ -2,15 +2,14 @@ import React, { useState } from "react"
 import Preview from "../Preview"
 import ImageUpload from "../ImageUpload"
 // import { API_URL } from './config'
-import request from "../../utils/request"
+import usePost from "../../hooks/usePost"
+
 import "./index.css"
-import useQuery from "../../hooks/useQuery"
 
 const App = () => {
   const [images, setImages] = useState([])
   const baseUrl = "http://localhost:3001"
-  // const { isFetching, error, parsedResponse } = useQuery({ url: baseUrl });
-  const { parsedResponse, isFetching, error } = useQuery({ url: baseUrl })
+  console.log("app mounts")
 
   function onChange(e) {
     const files = Array.from(e.target.files)
@@ -29,7 +28,7 @@ const App = () => {
     setImages(filteredImages)
   }
 
-  async function submit() {
+  function submit() {
     const { images } = this.state
 
     const formData = new FormData()
@@ -38,9 +37,10 @@ const App = () => {
       formData.append(i, file)
     })
 
-    console.log(...formData)
-
-    // const response = await request.post(`${baseUrl}/upload-photos`, formData)
+    const { isFetching, error, parsedResponse } = usePost({
+      url: `${baseUrl}/upload-photos`,
+      data: formData
+    })
     // console.log(response)
     // fetch(`${API_URL}/image-upload`, {
     //   method: 'POST',
