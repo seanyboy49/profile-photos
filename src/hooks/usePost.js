@@ -1,5 +1,13 @@
 import { useState, useEffect } from "react"
 
+const apiOptions = {
+  mode: "cors",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  redirect: "follow"
+}
+
 function usePost({ redirect = false, refetch = "", options = {} }) {
   const [parsedResponse, setParsedResponse] = useState(null)
   const [error, setError] = useState(null)
@@ -8,10 +16,11 @@ function usePost({ redirect = false, refetch = "", options = {} }) {
   const postData = async ({ url, data }) => {
     setIsFetching(true)
 
+    console.log(JSON.stringify(data))
     try {
       const response = await fetch(url, {
         method: "POST",
-        body: JSON.stringify(data)
+        body: data
       })
       const success = await response.json()
       setIsFetching(false)

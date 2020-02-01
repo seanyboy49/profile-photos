@@ -20,8 +20,14 @@ async function initServer() {
   server.route({
     method: "POST",
     path: "/upload-photos",
+    config: {
+      payload: {
+        allow: "multipart/form-data",
+        output: "stream"
+      }
+    },
     handler: (request, h) => {
-      console.log("/upload-photos", request)
+      console.log("/upload-photos", request.payload)
       return { message: "photo received" }
     }
   })

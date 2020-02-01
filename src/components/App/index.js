@@ -9,13 +9,13 @@ import "./index.css"
 const App = () => {
   const [images, setImages] = useState([])
   const baseUrl = "http://localhost:3001"
-  console.log("app mounts")
+  // console.log("app mounts")
 
   const { postData, isFetching, error, parsedResponse } = usePost({})
-  console.log("isFetching", isFetching)
-  console.log("error", error)
-  console.log("parsedResponse", parsedResponse)
-  console.log("postData", postData)
+  // console.log("isFetching", isFetching)
+  // console.log("error", error)
+  // console.log("parsedResponse", parsedResponse)
+  // console.log("postData", postData)
 
   function onChange(e) {
     const files = Array.from(e.target.files)
@@ -34,14 +34,18 @@ const App = () => {
     setImages(filteredImages)
   }
 
-  function submit() {
+  function submit(e) {
+    e.preventDefault()
+    console.log(e)
     const formData = new FormData()
 
     images.forEach((file, i) => {
       formData.append(i, file)
     })
 
-    postData({ url: `${baseUrl}/upload-photos`, body: formData })
+    console.log(formData)
+
+    postData({ url: `${baseUrl}/upload-photos`, data: formData })
     // console.log(response)
     // fetch(`${API_URL}/image-upload`, {
     //   method: 'POST',
@@ -52,7 +56,7 @@ const App = () => {
     //     this.setState({
     //       uploading: false,
     //       images,
-    //     })
+    //     }) y
     //   })
   }
 
@@ -60,16 +64,18 @@ const App = () => {
 
   return (
     <div>
-      <div className="buttons">
-        {isPreview ? (
-          <Preview images={images} removeImage={removeImage} />
-        ) : (
-          <ImageUpload onChange={onChange} />
-        )}
-      </div>
-      <button type="button" onClick={submit} disabled={!images}>
-        Submit Photos
-      </button>
+      <form>
+        <div className="buttons">
+          {isPreview ? (
+            <Preview images={images} removeImage={removeImage} />
+          ) : (
+            <ImageUpload onChange={onChange} />
+          )}
+        </div>
+        <button type="submit" onClick={submit} disabled={!images}>
+          Submit Photos
+        </button>
+      </form>
     </div>
   )
 }
