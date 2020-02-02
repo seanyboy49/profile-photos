@@ -1,12 +1,4 @@
-import { useState, useEffect } from "react"
-
-const apiOptions = {
-  mode: "cors",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  redirect: "follow"
-}
+import { useState } from "react"
 
 function usePost({ redirect = false, refetch = "", options = {} }) {
   const [parsedResponse, setParsedResponse] = useState(null)
@@ -16,7 +8,6 @@ function usePost({ redirect = false, refetch = "", options = {} }) {
   const postData = async ({ url, data }) => {
     setIsFetching(true)
 
-    console.log(JSON.stringify(data))
     try {
       const response = await fetch(url, {
         method: "POST",

@@ -34,30 +34,14 @@ const App = () => {
     setImages(filteredImages)
   }
 
-  function submit(e) {
-    e.preventDefault()
-    console.log(e)
+  function submit() {
     const formData = new FormData()
 
-    images.forEach((file, i) => {
-      formData.append(i, file)
+    images.forEach(file => {
+      formData.append(`profile-photo`, file)
     })
 
-    console.log(formData)
-
     postData({ url: `${baseUrl}/upload-photos`, data: formData })
-    // console.log(response)
-    // fetch(`${API_URL}/image-upload`, {
-    //   method: 'POST',
-    //   body: formData,
-    // })
-    //   .then(res => res.json())
-    //   .then(images => {
-    //     this.setState({
-    //       uploading: false,
-    //       images,
-    //     }) y
-    //   })
   }
 
   const isPreview = images.length > 0
@@ -72,7 +56,7 @@ const App = () => {
             <ImageUpload onChange={onChange} />
           )}
         </div>
-        <button type="submit" onClick={submit} disabled={!images}>
+        <button type="button" onClick={submit} disabled={!images}>
           Submit Photos
         </button>
       </form>
