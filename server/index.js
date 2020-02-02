@@ -43,14 +43,28 @@ async function initServer() {
       }
     },
     handler: async (request, h) => {
-      console.log()
-      const data = request.payload
-      const file = data["profile-photo"]
+      try {
+        const data = request.payload
+        const file = data["profile-photo"]
 
-      // save the file
-      const fileDetails = await uploader(file, fileOptions)
-      console.log("fileDetails", fileDetails)
-      return { message: "photo received" }
+        // save the file
+        const fileDetails = await uploader(file, fileOptions)
+
+        // save data to database
+        const col = await loadCollection(COLLECTION_NAME, db)
+        console.log("col", col)
+        const result = col.insert(fileDetails)
+        console.log("result", result)
+        db.saveDatabase()
+
+        return h.response({
+          id: result.$loki,
+          fileName: result.filename,
+          originalName: result.originalname
+        })
+      } catch (error) {
+        return h.response(Boom.badRequest(error.message, error))
+      }
     }
   })
 
